@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import { Product } from '../../../domain/products/models/Product';
 import { getAllProducts } from '../../../domain/products/services/productService';
 import { Button, Card, CardBody, CardFooter, Image } from '@nextui-org/react';
+import { useCartContext } from '../../hooks/useCartContext';
 
 const ProductList: React.FC = () => {
 	const [products, setProducts] = useState<Product[] | null>(null);
+	const { addItem } = useCartContext();
 
 	useEffect(() => {
 		const handleAllProducts = async () => {
@@ -40,7 +42,12 @@ const ProductList: React.FC = () => {
 								<h3 className='text-default-500 text-lg'>
 									{item.price} $
 								</h3>
-								<Button color='primary'>Add Cart</Button>
+								<Button
+									color='primary'
+									onClick={() => addItem(item)}
+								>
+									Add Cart
+								</Button>
 							</div>
 						</CardFooter>
 					</Card>
