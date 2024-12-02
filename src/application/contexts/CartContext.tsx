@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { Cart } from '../../domain/cart/models/Cart';
 import { Product } from '../../domain/products/models/Product';
 import {
@@ -14,6 +14,7 @@ export interface CartContextInt {
 	cart: Cart;
 	addItem: (product: Product) => boolean;
 	removeItem: (product: Product) => boolean;
+	isEmptyCart: (cart: Cart) => boolean;
 }
 
 interface CartContextProps {
@@ -34,6 +35,10 @@ const CartProvider: React.FC<CartContextProps> = ({
 }: CartContextProps) => {
 	const [cart, setCart] = useState<Cart>(persistanceData ?? INITIAL_CART);
 
+	const isEmptyCart = (cart: Cart): boolean => {
+		return cart.items.length === 0;
+	};
+
 	const addItem = (product: Product): boolean => {
 		const updatedCart = addToCart(product, cart);
 
@@ -41,8 +46,7 @@ const CartProvider: React.FC<CartContextProps> = ({
 			return false;
 		}
 
-		setCart({ ...updatedCart });
-		saveToLocalStorage<Cart>('cart', updatedCart);
+		updateCart(updatedCart);
 
 		return true;
 	};
@@ -54,18 +58,20 @@ const CartProvider: React.FC<CartContextProps> = ({
 			return false;
 		}
 
-		setCart({ ...updatedCart });
-		saveToLocalStorage<Cart>('cart', updatedCart);
+		updateCart(updatedCart);
 
 		return true;
 	};
 
-	useEffect(() => {
-		console.log('Cart state changed:', cart);
-	}, [cart]);
+	const updateCart = (updatedCart: Cart) => {
+		setCart({ ...updatedCart });
+		saveToLocalStorage<Cart>('cart', updatedCart);
+	};
 
 	return (
-		<CartContext.Provider value={{ cart, addItem, removeItem }}>
+		<CartContext.Provider
+			value={{ cart, addItem, removeItem, isEmptyCart }}
+		>
 			{children}
 		</CartContext.Provider>
 	);

@@ -1,6 +1,11 @@
 import { Product } from '../../products/models/Product';
 
 export interface Cart {
-	items: Product[];
+	items: CartItem[];
 	totalPrice: number;
+}
+
+export interface CartItem {
+	product: Product;
+	quantity: number;
 }

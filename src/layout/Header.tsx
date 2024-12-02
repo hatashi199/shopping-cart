@@ -7,11 +7,10 @@ import {
 import ShopLogoIcon from '../icons/ShopLogo';
 import CartIcon from '../icons/Cart';
 import { useCartContext } from '../application/hooks/useCartContext';
+import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
 	const { cart } = useCartContext();
-
-	console.log('Header rendered');
 
 	return (
 		<Navbar shouldHideOnScroll>
@@ -29,12 +28,15 @@ const Header: React.FC = () => {
 			</NavbarContent>
 			<NavbarContent justify='end'>
 				<NavbarItem className='hidden lg:flex text-md'>
-					<div className='flex justify-center items-center relative text-lg'>
+					<Link
+						to='/shop-cart'
+						className='flex justify-center items-center relative text-lg'
+					>
 						<CartIcon />
 						<span className='absolute -right-1 -top-1 z-10 block w-4 h-4 bg-red-500 text-white text-xs text-center font-bold rounded-full'>
 							{cart.items.length}
 						</span>
-					</div>
+					</Link>
 				</NavbarItem>
 			</NavbarContent>
 		</Navbar>

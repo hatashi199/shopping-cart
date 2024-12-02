@@ -1,5 +1,7 @@
+import Cart from '../application/modules/Cart/Cart';
+
 const ShopCart: React.FC = () => {
-	return <div>ShopCart</div>;
+	return <Cart />;
 };
 
 export default ShopCart;

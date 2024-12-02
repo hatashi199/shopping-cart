@@ -1,4 +1,4 @@
-import ProductList from '../application/modules/productList/ProductList';
+import ProductList from '../application/modules/ProductList/ProductList';
 
 const Shop: React.FC = () => {
 	return <ProductList />;
