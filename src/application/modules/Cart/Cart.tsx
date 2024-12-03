@@ -10,6 +10,8 @@ import {
 import { useCartContext } from '../../hooks/useCartContext';
 import { Key, useCallback } from 'react';
 import { CartItem } from '../../../domain/cart/models/Cart';
+import DeleteIcon from '../../../icons/Delete';
+import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 
 const Cart: React.FC = () => {
 	const { cart, removeItem } = useCartContext();
@@ -47,7 +49,7 @@ const Cart: React.FC = () => {
 					return (
 						<ProductCart
 							avatarProps={{
-								radius: 'lg',
+								radius: 'md',
 								src: item.product.image
 							}}
 							description={item.product.category}
@@ -60,37 +62,44 @@ const Cart: React.FC = () => {
 					return <span>{item.quantity}</span>;
 				case 'id':
 					return (
-						<span onClick={() => removeItem(item.product)}>
-							delete
-						</span>
+						<ConfirmDialog
+							trueMethod={() => removeItem(item.product)}
+						/>
 					);
+				default:
+					return cellValue;
 			}
 		},
 		[removeItem]
 	);
 
 	return (
-		<Table aria-label='Products selected in a cart'>
-			<TableHeader columns={columns}>
-				{(column) => (
-					<TableColumn
-						key={column.id}
-						align='start'
-					>
-						{column.name}
-					</TableColumn>
-				)}
-			</TableHeader>
-			<TableBody items={cart.items}>
-				{(item) => (
-					<TableRow key={item.product.id}>
-						{(columnKey) => (
-							<TableCell>{renderCell(item, columnKey)}</TableCell>
-						)}
-					</TableRow>
-				)}
-			</TableBody>
-		</Table>
+		<>
+			<Table aria-label='Products selected in a cart'>
+				<TableHeader columns={columns}>
+					{(column) => (
+						<TableColumn
+							key={column.id}
+							align='start'
+						>
+							{column.name}
+						</TableColumn>
+					)}
+				</TableHeader>
+				<TableBody items={cart.items}>
+					{(item) => (
+						<TableRow key={item.product.id}>
+							{(columnKey) => (
+								<TableCell>
+									{renderCell(item, columnKey)}
+								</TableCell>
+							)}
+						</TableRow>
+					)}
+				</TableBody>
+			</Table>
+			<span>{cart.totalPrice} $</span>
+		</>
 	);
 };
 

@@ -64,7 +64,7 @@ const CartProvider: React.FC<CartContextProps> = ({
 	};
 
 	const updateCart = (updatedCart: Cart) => {
-		setCart({ ...updatedCart });
+		setCart(updatedCart);
 		saveToLocalStorage<Cart>('cart', updatedCart);
 	};
 

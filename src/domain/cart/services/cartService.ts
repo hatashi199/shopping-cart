@@ -11,8 +11,7 @@ export const addToCart = (product: Product, cart: Cart): Cart | null => {
 			existingCartItem.quantity += 1;
 		}
 
-		cart.totalPrice += product.price;
-		return cart;
+		return { ...cart, totalPrice: cart.totalPrice + product.price };
 	} catch (error) {
 		console.log('Cannot add to shop cart: ', error);
 		return null;
@@ -25,12 +24,26 @@ export const removeFromCart = (id: number, cart: Cart): Cart | null => {
 			return null;
 		}
 
-		const removeFromCart = cart.items.filter(
-			(item) => item.product.id !== id
-		);
-		cart.items = [...removeFromCart];
+		const updatedItems = cart.items
+			.map((item) => {
+				if (item.product.id === id) {
+					item.quantity -= 1;
+				}
 
-		return cart;
+				return { ...item };
+			})
+			.filter((item) => item.quantity > 0);
+
+		const updatedCart = {
+			...cart,
+			items: updatedItems,
+			totalPrice: updatedItems.reduce(
+				(total, item) => total + item.product.price * item.quantity,
+				0
+			)
+		};
+
+		return updatedCart;
 	} catch (error) {
 		console.log('Cannot remove from shop cart', error);
 		return null;
