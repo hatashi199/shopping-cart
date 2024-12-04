@@ -10,11 +10,12 @@ import {
 import { useCartContext } from '../../hooks/useCartContext';
 import { Key, useCallback } from 'react';
 import { CartItem } from '../../../domain/cart/models/Cart';
-import DeleteIcon from '../../../icons/Delete';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
+import { helpers } from '../../utils/helpers';
 
 const Cart: React.FC = () => {
 	const { cart, removeItem } = useCartContext();
+	const { formatDecimal } = helpers;
 
 	type TableCartColumn = {
 		id: string;
@@ -57,7 +58,15 @@ const Cart: React.FC = () => {
 						></ProductCart>
 					);
 				case 'price':
-					return <span>{item.product.price * item.quantity} $</span>;
+					return (
+						<span>
+							{formatDecimal(
+								item.product.price * item.quantity,
+								2
+							)}{' '}
+							$
+						</span>
+					);
 				case 'category':
 					return <span>{item.quantity}</span>;
 				case 'id':
@@ -70,7 +79,7 @@ const Cart: React.FC = () => {
 					return cellValue;
 			}
 		},
-		[removeItem]
+		[removeItem, formatDecimal]
 	);
 
 	return (
@@ -98,7 +107,6 @@ const Cart: React.FC = () => {
 					)}
 				</TableBody>
 			</Table>
-			<span>{cart.totalPrice} $</span>
 		</>
 	);
 };
