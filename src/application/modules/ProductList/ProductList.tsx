@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import { Product } from '../../../domain/products/models/Product';
 import { getAllProducts } from '../../../domain/products/services/productService';
 import { Button, Card, CardBody, CardFooter, Image } from '@nextui-org/react';
-import { useCartContext } from '../../hooks/useCartContext';
+import { useGenericContext } from '../../hooks/useCartContext';
 import { helpers } from '../../utils/helpers';
+import { CartContext, CartContextInt } from '../../contexts/CartContext';
 
 const ProductList: React.FC = () => {
 	const [products, setProducts] = useState<Product[] | null>(null);
-	const { addItem } = useCartContext();
+	const { addItem } = useGenericContext<CartContextInt>(CartContext);
 	const { formatDecimal } = helpers;
 
 	useEffect(() => {
@@ -20,7 +21,7 @@ const ProductList: React.FC = () => {
 	}, []);
 
 	return (
-		<div className='gap-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 py-10'>
+		<div className='grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 py-10 px-5 center-box mx-auto'>
 			{products &&
 				products.map((item) => (
 					<Card

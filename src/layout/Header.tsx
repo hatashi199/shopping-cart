@@ -2,15 +2,28 @@ import {
 	Navbar,
 	NavbarBrand,
 	NavbarContent,
-	NavbarItem
+	NavbarItem,
+	Switch
 } from '@nextui-org/react';
 import ShopLogoIcon from '../icons/ShopLogo';
 import CartIcon from '../icons/Cart';
-import { useCartContext } from '../application/hooks/useCartContext';
+import { useGenericContext } from '../application/hooks/useCartContext';
 import { Link } from 'react-router-dom';
+import {
+	CartContext,
+	CartContextInt
+} from '../application/contexts/CartContext';
+import SunIcon from '../icons/Sun';
+import MoonIcon from '../icons/Moon';
+import {
+	ThemeContext,
+	ThemeContextInt
+} from '../application/contexts/ThemeContext';
 
 const Header: React.FC = () => {
-	const { cart } = useCartContext();
+	const { cart } = useGenericContext<CartContextInt>(CartContext);
+	const { theme, toggleTheme } =
+		useGenericContext<ThemeContextInt>(ThemeContext);
 
 	return (
 		<Navbar shouldHideOnScroll>
@@ -28,6 +41,15 @@ const Header: React.FC = () => {
 			</NavbarContent>
 			<NavbarContent justify='end'>
 				<NavbarItem className='hidden lg:flex text-md'>
+					<Switch
+						isSelected={theme === 'dark'}
+						size='md'
+						color='primary'
+						thumbIcon={({ isSelected }) =>
+							isSelected ? <MoonIcon /> : <SunIcon />
+						}
+						onChange={toggleTheme}
+					/>
 					<Link
 						to='/shop-cart'
 						className='flex justify-center items-center relative text-lg'

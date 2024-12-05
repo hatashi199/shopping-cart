@@ -12,3 +12,8 @@ body {
 	font-style: normal;
 	min-height: 100vh;
 }
+
+.center-box {
+	max-width: 1300px;
+	width: 100%;
+}

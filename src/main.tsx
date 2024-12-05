@@ -6,15 +6,18 @@ import App from './App.tsx';
 
 import './css/index.css';
 import { CartProvider } from './application/contexts/CartContext.tsx';
+import { ThemeProvider } from './application/contexts/ThemeContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
 		<NextUIProvider>
-			<CartProvider>
-				<main className='dark text-foreground bg-background'>
-					<App />
-				</main>
-			</CartProvider>
+			<ThemeProvider>
+				<CartProvider>
+					<main className='text-foreground bg-background'>
+						<App />
+					</main>
+				</CartProvider>
+			</ThemeProvider>
 		</NextUIProvider>
 	</StrictMode>
 );

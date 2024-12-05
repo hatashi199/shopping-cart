@@ -1,12 +1,13 @@
 import { useContext } from 'react';
-import { CartContext, CartContextInt } from '../contexts/CartContext';
 
-export const useCartContext = (): CartContextInt => {
-	const cartContext = useContext(CartContext);
+export const useGenericContext = <T>(
+	context: React.Context<T | undefined>
+): T => {
+	const value = useContext(context);
 
-	if (cartContext === undefined) {
+	if (value === undefined) {
 		throw new Error('Context is undefined');
 	}
 
-	return cartContext;
+	return value;
 };

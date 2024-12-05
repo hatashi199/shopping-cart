@@ -7,14 +7,15 @@ import {
 	TableRow,
 	User as ProductCart
 } from '@nextui-org/react';
-import { useCartContext } from '../../hooks/useCartContext';
+import { useGenericContext } from '../../hooks/useCartContext';
 import { Key, useCallback } from 'react';
 import { CartItem } from '../../../domain/cart/models/Cart';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import { helpers } from '../../utils/helpers';
+import { CartContext, CartContextInt } from '../../contexts/CartContext';
 
 const Cart: React.FC = () => {
-	const { cart, removeItem } = useCartContext();
+	const { cart, removeItem } = useGenericContext<CartContextInt>(CartContext);
 	const { formatDecimal } = helpers;
 
 	type TableCartColumn = {
@@ -95,7 +96,10 @@ const Cart: React.FC = () => {
 						</TableColumn>
 					)}
 				</TableHeader>
-				<TableBody items={cart.items}>
+				<TableBody
+					items={cart.items}
+					emptyContent={<span>EMPTY CART</span>}
+				>
 					{(item) => (
 						<TableRow key={item.product.id}>
 							{(columnKey) => (

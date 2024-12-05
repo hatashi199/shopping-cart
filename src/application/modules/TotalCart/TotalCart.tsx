@@ -1,9 +1,10 @@
 import { Button, Divider } from '@nextui-org/react';
-import { useCartContext } from '../../hooks/useCartContext';
+import { useGenericContext } from '../../hooks/useCartContext';
 import { helpers } from '../../utils/helpers';
+import { CartContext, CartContextInt } from '../../contexts/CartContext';
 
 const TotalCart: React.FC = () => {
-	const { cart } = useCartContext();
+	const { cart } = useGenericContext<CartContextInt>(CartContext);
 	const { formatDecimal } = helpers;
 	const delivery =
 		cart.items.length > 0 ? formatDecimal(7.99, 2) : formatDecimal(0.0, 2);
