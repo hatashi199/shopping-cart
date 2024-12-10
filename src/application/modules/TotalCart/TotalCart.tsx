@@ -10,7 +10,7 @@ const TotalCart: React.FC = () => {
 		cart.items.length > 0 ? formatDecimal(7.99, 2) : formatDecimal(0.0, 2);
 
 	return (
-		<div className='bg-content1 rounded-large p-4'>
+		<div className='bg-content1 shadow-small rounded-large p-4'>
 			<h3 className='pb-5'>Total</h3>
 			<Divider />
 			<ul className='flex flex-col gap-3 py-5'>
@@ -33,7 +33,7 @@ const TotalCart: React.FC = () => {
 				</li>
 			</ul>
 			<Button
-				className='mt-5 w-full'
+				className='bg-primary text-white mt-5 w-full'
 				disabled={cart.items.length < 1}
 			>
 				Buy

@@ -27,9 +27,14 @@ const Header: React.FC = () => {
 
 	return (
 		<Navbar shouldHideOnScroll>
-			<NavbarBrand className='inline-flex gap-3'>
-				<ShopLogoIcon />
-				<span>SC</span>
+			<NavbarBrand>
+				<a
+					href='/'
+					className='inline-flex items-center gap-3'
+				>
+					<ShopLogoIcon />
+					<span>SC</span>
+				</a>
 			</NavbarBrand>
 			<NavbarContent
 				className='hidden sm:flex gap-4'

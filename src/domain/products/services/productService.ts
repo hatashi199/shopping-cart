@@ -10,7 +10,7 @@ export const getAllProducts = (): Promise<Product[]> => {
 
 export const getProduct = (id: number): Promise<Product> => {
 	const response = apiClient.get<Product>(
-		'https://fakestoreapi.com/products',
+		'https://fakestoreapi.com/products/',
 		id
 	);
 	return response;
